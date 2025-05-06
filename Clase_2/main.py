@@ -47,7 +47,7 @@ for i in matrix2:
 
 print(matrix2)
 """
-matrix3 = np.array([range(3), range(3), range(3)])
+"""matrix3 = np.array([range(3), range(3), range(3)])
 
 for i in range(len(matrix3)):
     for j in range(len(matrix3):
@@ -56,7 +56,7 @@ for i in range(len(matrix3)):
 
 print(matrix3)
 
-
+"""
 
 
 

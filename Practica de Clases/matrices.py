@@ -19,8 +19,8 @@ calculá cuántas minas hay alrededor de cada casilla no-minada, y completá el 
 import numpy as np
 import random
 
-TAM = 3
-MINAS = 3
+TAM = 4
+MINAS = 4
 
 #Crear tablero con ceros
 tablero = np.zeros((TAM, TAM), dtype=int)
@@ -46,19 +46,11 @@ for i in range(TAM):
             tablero[i][j] = contador
 
 print("Tablero (9 = mina):")
-print(tablero)
 
-
-
-
-
-
-
-
-
-
-
-
+for i in range(len(tablero)):
+    for j in range(len(tablero)):
+        print(tablero[i][j], end="\t")
+    print()
 
 
 

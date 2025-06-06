@@ -1,0 +1,76 @@
+📝 Consigna CRUD de Productos de Supermercado
+💡 Objetivo:
+Desarrollar una aplicación de consola en Python que permita realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) sobre productos de supermercado. Utilizar la clase Product como modelo de entidad y el archivo binario productos.bin como base de datos.
+
+🧱 Material Proporcionado:
+Clase modelo Product:
+
+class Product:
+    def __init__(self, cod: int, name: str, price: float):
+        if price < 0:
+            raise ValueError("El precio no puede ser negativo.")
+        self.codigo: int = cod
+        self.nombre: str = name
+        self.precio: float = price
+
+    def __str__(self):
+        return f"Producto ({self.codigo}): {self.nombre} - Precio: ${self.precio:.2f}"
+
+    def aplicar_descuento(self, porcentaje: float) -> float:
+        if not isinstance(porcentaje, (int, float)):
+            raise TypeError("El porcentaje debe ser un número.")
+        if not (1 <= porcentaje <= 100):
+            raise ValueError("El porcentaje debe estar entre 1 y 100.")
+
+        descuento = self.precio * (porcentaje / 100)
+        return round(self.precio - descuento, 2)
+Archivo binario productos.bin: contiene 100 productos de supermercado con nombres reales y precios aleatorios (ya generado y entregado por el docente).
+
+✅ Requisitos del Trabajo:
+📌 Implementar un menú de opciones con las siguientes operaciones:
+📄 Listar todos los productos
+
+Mostrar cada producto en una línea, con su código, nombre y precio.
+
+🔍 Buscar un producto por código
+
+Ingresar un código y mostrar los detalles si existe.
+
+➕ Agregar un nuevo producto
+
+Solicitar al usuario: código, nombre y precio.
+
+Verificar que el código no esté duplicado.
+
+Guardar el nuevo producto en el archivo productos.bin.
+
+✏️ Modificar un producto existente
+
+Buscar el producto por código.
+
+Permitir modificar su nombre y/o precio.
+
+Guardar los cambios en el archivo.
+
+🗑️ Eliminar un producto
+
+Ingresar el código del producto a eliminar.
+
+Confirmar la acción antes de eliminar.
+
+💾 Guardar cambios
+
+Todos los cambios deben persistirse en el archivo productos.bin usando pickle.
+
+🚪 Salir
+
+Terminar el programa de forma segura.
+
+🧠 Consideraciones:
+Usar funciones para organizar el código (por ejemplo, listar_productos(), agregar_producto(), etc.).
+
+Validar entradas del usuario (por ejemplo, que el precio sea un número válido).
+
+Asegurar que el archivo se abre y cierra correctamente en modo binario.
+
+El archivo productos.bin debe mantenerse actualizado tras cada operación que modifique los datos.

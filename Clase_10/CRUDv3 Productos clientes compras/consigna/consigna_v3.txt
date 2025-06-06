@@ -1,0 +1,75 @@
+🧾 Consigna: Gestión de Compras 🛍️
+🎯 Objetivo general:
+Ampliar la aplicación para permitir registrar y gestionar compras realizadas por los clientes. Cada compra debe almacenar:
+
+El cliente que la realizó.
+
+Los productos comprados (pueden ser varios).
+
+La fecha y hora exacta de la compra.
+
+🆕 Requisitos nuevos:
+1. 📦 Crear la clase Compra con los siguientes atributos:
+cliente: una instancia de la clase Cliente.
+
+productos: una lista de objetos Product.
+
+fecha_hora: una instancia de la nueva clase FechaHora.
+
+total: el total de la compra (precio sumado de todos los productos).
+
+2. 💾 Persistencia:
+Guardar todas las compras en un archivo llamado compras.bin usando pickle.
+
+Permitir la carga automática de compras al iniciar el programa.
+
+3. 🛠️ Funcionalidades CRUD para compras:
+Agregar al menú principal una nueva sección Gestión de Compras, con estas operaciones:
+
+🔄 Menú de Compras:
+📄 Listar compras
+Mostrar: DNI del cliente, nombre, productos comprados (nombre y precio), fecha y hora, total.
+
+➕ Registrar nueva compra
+
+Ingresar DNI del cliente.
+
+Validar que exista.
+
+Ingresar códigos de productos hasta terminar.
+
+Validar cada código de producto.
+
+Registrar fecha y hora automática (datetime.now()).
+
+Calcular total.
+
+Guardar la compra.
+
+🔍 Buscar compras por DNI
+Mostrar solo las compras hechas por un cliente en particular.
+
+🗑️ Eliminar compra
+Listar compras con índice.
+Confirmar y eliminar la seleccionada.
+
+💾 Guardar cambios
+Escribir en compras.bin.
+
+⬅️ Volver al menú principal
+
+🔒 Validaciones:
+El cliente debe existir para registrar una compra.
+
+No se puede registrar una compra sin productos.
+
+El código de producto debe ser válido y existente.
+
+Validar fecha y hora ingresada manualmente (si se habilita).
+
+🔁 Reutilización:
+Usar las clases Cliente, Product y la nueva FechaHora.
+
+Reutilizar funciones auxiliares de validación y entrada.
+
+Integrar con menús existentes manteniendo la estructura modular.

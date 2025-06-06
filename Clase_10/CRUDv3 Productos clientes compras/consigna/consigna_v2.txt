@@ -1,0 +1,46 @@
+🔄 Versión 2 (actualizada): CRUD de Productos + Clientes con Fecha de Nacimiento
+💡 Objetivo:
+Extender el programa CRUD de productos para permitir también la gestión de clientes, incluyendo su fecha de nacimiento, utilizando una clase Fecha previamente vista.
+
+🧱 Material proporcionado:
+1. ✅ Clase Fecha y Cliente (modelo actualizado):
+✅ Requisitos de implementación:
+📌 Añadir al menú principal una sección "Gestión de Clientes", con las siguientes operaciones:
+📄 Listar clientes
+
+Mostrar nombre, DNI y fecha de nacimiento.
+
+🔍 Buscar cliente por DNI
+
+Mostrar información si existe.
+
+➕ Agregar cliente
+
+Ingresar nombre, DNI y fecha de nacimiento (dd/mm/aaaa).
+
+Validar formato y que no exista duplicado por DNI.
+
+Almacenar en clientes.bin.
+
+✏️ Modificar cliente existente
+
+Permitir cambiar nombre o fecha de nacimiento.
+
+🗑️ Eliminar cliente
+
+Confirmar antes de eliminar.
+
+💾 Guardar cambios
+
+Usar pickle para guardar clientes.bin.
+
+⬅️ Volver al menú principal
+
+🎯 Consideraciones:
+Usar la clase Fecha para manejar fechas válidas y consistentes.
+
+Validar que el DNI sea único.
+
+Reutilizar funciones para mantener el código limpio y modular.
+
+Asegurar el correcto manejo de errores y persistencia de datos.

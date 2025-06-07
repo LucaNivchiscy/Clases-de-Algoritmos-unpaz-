@@ -10,7 +10,7 @@ class GestionDePacientes:
         self.archivo_pacientes = archivo_pacientes
         self.pacientes: list[Paciente] = self._cargar_pacientes()
         self.gestion_de_turnos = gestion_de_turnos
-
+#--------------------------------FUNCIONES PRIVADAS--------------------------------#
     def _cargar_pacientes(self) -> list[Paciente]:
         if not os.path.exists(self.archivo_pacientes):
             return []
@@ -42,6 +42,7 @@ class GestionDePacientes:
             print(f"No se encontró un paciente con DNI {dni}.")
         return None
 
+#--------------------------------FUNCIONES PÚBLICAS--------------------------------#
     def listar_pacientes(self):
         if not self.pacientes:
             print("No hay pacientes registrados.")

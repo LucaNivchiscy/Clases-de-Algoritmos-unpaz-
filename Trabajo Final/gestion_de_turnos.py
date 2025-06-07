@@ -16,8 +16,7 @@ class GestionDeTurnos:
         self.gestion_medicos = gestion_medicos
         self.turnos: list[Turno] = self._cargar_turnos()
 
-
-
+#--------------------------------FUNCIONES PRIVADAS--------------------------------#
     def _cargar_turnos(self) -> list[Turno]:
         if not os.path.exists(self.archivo_turnos):
             return []
@@ -31,7 +30,62 @@ class GestionDeTurnos:
         with open(self.archivo_turnos, "wb") as f:
             pickle.dump(self.turnos, f)
 
+    def _verificar_medico_y_hora(self, medico, fecha_hora)-> bool:
+        for turno in self.turnos:
+            if (turno.medico.matricula == medico.matricula and
+                turno.fecha_hora.anio == fecha_hora.anio and
+                turno.fecha_hora.mes == fecha_hora.mes and
+                turno.fecha_hora.dia == fecha_hora.dia and
+                turno.fecha_hora.hora == fecha_hora.hora and
+                turno.fecha_hora.minuto == fecha_hora.minuto):
+                print(f"El médico {medico.nombre} ya tiene un turno agendado para esa fecha y hora.")
+                return False
+        return True
 
+    def _verificar_paciente_y_hora(self, paciente, fecha_hora) -> bool:
+        for turno in self.turnos:
+            if (turno.paciente.DNI == paciente.DNI and
+                turno.fecha_hora.anio == fecha_hora.anio and
+                turno.fecha_hora.mes == fecha_hora.mes and
+                turno.fecha_hora.dia == fecha_hora.dia and
+                turno.fecha_hora.hora == fecha_hora.hora and
+                turno.fecha_hora.minuto == fecha_hora.minuto):
+                print(f"El paciente {paciente.nombre} ya tiene un turno agendado para esa fecha y hora.")
+                return False
+        return True
+
+    def _turnos_en_fecha(self, fecha: Fecha) -> list[Turno]:
+        turnos_en_fecha = []
+        for turno in self.turnos:
+            if (turno.fecha_hora.anio == fecha.anio and
+                    turno.fecha_hora.mes == fecha.mes and
+                    turno.fecha_hora.dia == fecha.dia):
+                turnos_en_fecha.append(turno)
+        return turnos_en_fecha
+
+    def _pedir_fecha_hora(self, mensaje: str) -> FechaHora | None:
+        while True:
+            fecha_hora = input(mensaje).strip()
+            try:
+                return FechaHora(fecha_hora)
+            except ValueError as e:
+                print(f"Error: {e}")
+                continuar = input("¿Desea intentar nuevamente? (s/n): ").strip().lower()
+                if continuar != 's':
+                    return None
+
+    def _encontrar_turno_por_fecha_hora(self, fecha_hora) -> Turno | None:
+        for turno in self.turnos:
+            if (turno.fecha_hora.anio == fecha_hora.anio and
+                turno.fecha_hora.mes == fecha_hora.mes and
+                turno.fecha_hora.dia == fecha_hora.dia and
+                turno.fecha_hora.hora == fecha_hora.hora and
+                turno.fecha_hora.minuto == fecha_hora.minuto):
+                return turno
+        print(f"No se encontró un turno para la fecha y hora {fecha_hora}.")
+        return None
+
+#--------------------------------FUNCIONES PÚBLICAS--------------------------------#
     def listar_turnos(self):
         if not self.turnos:
             print("No hay turnos registrados.")
@@ -66,30 +120,6 @@ class GestionDeTurnos:
         self._guardar_turnos()
         print(f"Turno agregado exitosamente:")
         print(nuevo_turno)
-
-
-    def _verificar_medico_y_hora(self, medico, fecha_hora)-> bool:
-        for turno in self.turnos:
-            if (turno.medico.matricula == medico.matricula and
-                turno.fecha_hora.anio == fecha_hora.anio and
-                turno.fecha_hora.mes == fecha_hora.mes and
-                turno.fecha_hora.dia == fecha_hora.dia and
-                turno.fecha_hora.hora == fecha_hora.hora and
-                turno.fecha_hora.minuto == fecha_hora.minuto):
-                print(f"El médico {medico.nombre} ya tiene un turno agendado para esa fecha y hora.")
-                return False
-        return True
-    def _verificar_paciente_y_hora(self, paciente, fecha_hora) -> bool:
-        for turno in self.turnos:
-            if (turno.paciente.DNI == paciente.DNI and
-                turno.fecha_hora.anio == fecha_hora.anio and
-                turno.fecha_hora.mes == fecha_hora.mes and
-                turno.fecha_hora.dia == fecha_hora.dia and
-                turno.fecha_hora.hora == fecha_hora.hora and
-                turno.fecha_hora.minuto == fecha_hora.minuto):
-                print(f"El paciente {paciente.nombre} ya tiene un turno agendado para esa fecha y hora.")
-                return False
-        return True
 
     def listar_paciente_medico(self):
         if not self.turnos:
@@ -126,7 +156,6 @@ class GestionDeTurnos:
                 print("Opción inválida. Debe ser 'P' o 'M' o 'S'.")
                 return
 
-
     def buscar_por_fecha(self):
         fecha_str = input("Ingrese la fecha del turno (dd/mm/aaaa): ").strip()
         try:
@@ -142,26 +171,6 @@ class GestionDeTurnos:
         for turno in turnos_en_fecha:
             print(turno)
 
-    def _turnos_en_fecha(self, fecha: Fecha) -> list[Turno]:
-        turnos_en_fecha = []
-        for turno in self.turnos:
-            if (turno.fecha_hora.anio == fecha.anio and
-                    turno.fecha_hora.mes == fecha.mes and
-                    turno.fecha_hora.dia == fecha.dia):
-                turnos_en_fecha.append(turno)
-        return turnos_en_fecha
-
-    def _pedir_fecha_hora(self, mensaje: str) -> FechaHora | None:
-        while True:
-            fecha_hora = input(mensaje).strip()
-            try:
-                return FechaHora(fecha_hora)
-            except ValueError as e:
-                print(f"Error: {e}")
-                continuar = input("¿Desea intentar nuevamente? (s/n): ").strip().lower()
-                if continuar != 's':
-                    return None
-
     def eliminar_turno(self):
         fecha_hora = self._pedir_fecha_hora("Ingrese la fecha y hora del turno a eliminar (dd/mm/aaaa HH:MM): ")
         turno_a_eliminar = self._encontrar_turno_por_fecha_hora(fecha_hora)
@@ -174,18 +183,6 @@ class GestionDeTurnos:
             print(f"Turno {turno_a_eliminar} eliminado exitosamente.")
         else:
             print("Operación cancelada.")
-
-    def _encontrar_turno_por_fecha_hora(self, fecha_hora) -> Turno | None:
-        for turno in self.turnos:
-            if (turno.fecha_hora.anio == fecha_hora.anio and
-                turno.fecha_hora.mes == fecha_hora.mes and
-                turno.fecha_hora.dia == fecha_hora.dia and
-                turno.fecha_hora.hora == fecha_hora.hora and
-                turno.fecha_hora.minuto == fecha_hora.minuto):
-                return turno
-        print(f"No se encontró un turno para la fecha y hora {fecha_hora}.")
-        return None
-
 
     def guardar_cambios(self):
         self._guardar_turnos()

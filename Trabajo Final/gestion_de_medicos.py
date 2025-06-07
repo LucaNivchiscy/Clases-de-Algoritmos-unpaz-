@@ -3,15 +3,13 @@ import os
 import pickle
 
 
-
-
 class GestionDeMedicos:
     def __init__(self, archivo_medicos: str, gestion_de_turnos: 'GestionDeTurnos'=None):
         self.archivo_medicos = archivo_medicos
         self.medicos: list[Medico] = self._cargar_medicos()
         self.gestion_de_turnos = gestion_de_turnos
 
-
+#--------------------------------FUNCIONES PRIVADAS--------------------------------#
     def _cargar_medicos(self) -> list[Medico]:
         if not os.path.exists(self.archivo_medicos):
             return []
@@ -25,6 +23,37 @@ class GestionDeMedicos:
         with open(self.archivo_medicos, "wb") as f:
             pickle.dump(self.medicos , f)
 
+    def _validar_matricula(self, mensaje: str= "Ingrese la matrícula del médico ('s' para cancelar): ") -> str | None:
+        while True:
+            matricula = input(mensaje).strip()
+            if matricula.lower() == 's':
+                print("Operación cancelada.")
+                return None
+            if matricula.isdigit() and len(matricula) >= 5:
+                return matricula
+            print("Matrícula inválida. Debe ser numérica y tener al menos 5 dígitos.")
+
+    def _validar_str(self, mensaje: str) -> str:
+        while True:
+            nombre = input(mensaje).strip().title()
+            if not nombre:
+                print("El nombre no puede estar vacío.")
+                continue
+            if nombre:
+                return nombre
+            print("Ingrese el dato requerido.")
+
+    def _encontrar_medico_por_matricula(self, matricula, mensaje: bool= True) -> Medico | None:
+        for medico in self.medicos:
+            if medico.matricula == matricula:
+                return medico
+        if mensaje:
+            print(f"No se encontró un médico con matrícula {matricula}.")
+        return None
+
+
+
+#--------------------------------FUNCIONES PÚBLICAS--------------------------------#
     def listar_medicos(self):
         if not self.medicos:
             print("No hay medicos registrados.")
@@ -41,16 +70,6 @@ class GestionDeMedicos:
         if not medico:
             return
         print(f"Médico encontrado: {medico}")
-
-    def _validar_matricula(self, mensaje: str= "Ingrese la matrícula del médico ('s' para cancelar): ") -> str | None:
-        while True:
-            matricula = input(mensaje).strip()
-            if matricula.lower() == 's':
-                print("Operación cancelada.")
-                return None
-            if matricula.isdigit() and len(matricula) >= 5:
-                return matricula
-            print("Matrícula inválida. Debe ser numérica y tener al menos 5 dígitos.")
 
     def agregar_medico(self):
         while True:
@@ -75,16 +94,6 @@ class GestionDeMedicos:
         self._guardar_medicos()
         print(f"Médico {nombre} agregado exitosamente.")
 
-    def _validar_str(self, mensaje: str) -> str :
-        while True:
-            nombre = input(mensaje).strip().title()
-            if not nombre:
-                print("El nombre no puede estar vacío.")
-                continue
-            if nombre:
-                return nombre
-            print("Ingrese el dato requerido.")
-
     def modificar_medico(self):
         matricula = self._validar_matricula()
         if not matricula:
@@ -99,14 +108,6 @@ class GestionDeMedicos:
         medico.especialidad = especialidad
         self._guardar_medicos()
         print(f"Médico {medico.nombre} modificado exitosamente.")
-
-    def _encontrar_medico_por_matricula(self, matricula, mensaje: bool= True) -> Medico | None:
-        for medico in self.medicos:
-            if medico.matricula == matricula:
-                return medico
-        if mensaje:
-            print(f"No se encontró un médico con matrícula {matricula}.")
-        return None
 
     def eliminar_medico(self):
         matricula = self._validar_matricula("Ingrese la matrícula del médico a eliminar ('s' para salir): ")

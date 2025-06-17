@@ -73,10 +73,6 @@ class GestionDeMedicos:
 
     def agregar_medico(self):
         while True:
-            control = input("¿Desea registrar un nuevo médico? (s/n): ").strip().lower()
-            if control == 'n':
-                print("Operación cancelada.")
-                return
             matricula = self._validar_matricula()
             if not matricula:
                 return
@@ -89,6 +85,10 @@ class GestionDeMedicos:
 
         nombre = self._validar_str("Ingrese el nombre del médico: ")
         especialidad = self._validar_str("Ingrese la especialidad del médico: ")
+        control = input("¿Desea registrar un nuevo médico? (s/n): ").strip().lower()
+        if control == 'n':
+            print("Operación cancelada.")
+            return
         nuevo_medico = Medico(matricula, nombre, especialidad)
         self.medicos.append(nuevo_medico)
         self._guardar_medicos()
@@ -121,11 +121,9 @@ class GestionDeMedicos:
             self.medicos.remove(medico)
             self._guardar_medicos()
             if self.gestion_de_turnos:
-                turnos = []
                 for turno in self.gestion_de_turnos.turnos:
-                    if turno.medico.matricula != medico.matricula:
-                        turnos.append(turno)
-                self.gestion_de_turnos.turnos = turnos
+                    if turno.medico.matricula == medico.matricula:
+                        self.gestion_de_turnos.turnos.remove(turno)
                 self.gestion_de_turnos._guardar_turnos()
             print(f"Médico {medico.nombre} eliminado exitosamente.")
         else:

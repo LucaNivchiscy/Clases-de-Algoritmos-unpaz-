@@ -1,12 +1,12 @@
-from fecha_hora import FechaHora
+from fecha import Fecha
 from paciente import Paciente
 from medico import Medico
 
 
 class Turno:
-    def __init__(self, fecha_hora: FechaHora, paciente: Paciente, medico: Medico, motivo: str = "Consulta general"):
-        if not isinstance(fecha_hora, FechaHora):
-            raise TypeError("fecha_hora debe ser una instancia de la clase FechaHora.")
+    def __init__(self, fecha_hora: Fecha, paciente: Paciente, medico: Medico, motivo: str = "Consulta general"):
+        if not isinstance(fecha_hora, Fecha):
+            raise TypeError("fecha_hora debe ser una instancia de la clase Fecha.")
         if not isinstance(paciente, Paciente):
             raise TypeError("paciente debe ser una instancia de la clase Paciente.")
         if not isinstance(medico, Medico):

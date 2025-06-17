@@ -121,11 +121,9 @@ class GestionDePacientes:
             self.pacientes.remove(paciente)
             self._guardar_pacientes()
             if self.gestion_de_turnos:
-                turnos = []
                 for turno in self.gestion_de_turnos.turnos:
-                    if turno.paciente.DNI != paciente.DNI:
-                        turnos.append(turno)
-                self.gestion_de_turnos.turnos = turnos
+                    if turno.paciente.DNI == paciente.DNI:
+                        self.gestion_de_turnos.turnos.remove(turno)
                 self.gestion_de_turnos._guardar_turnos()
             print(f"Paciente {paciente.nombre} eliminado exitosamente.")
         else:

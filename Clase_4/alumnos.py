@@ -16,7 +16,7 @@ Buscar alumno por Codigo de Alumno
 Salir del programa
 Se deja como base la clase Fecha para que puedan reutilizarla,
 tener en cuenta que para crear una nueva fecha deben pasarle al constructor un formato de fecha válido "dd/mm/AAAA" donde dd representa el día,
- mm el mes y AAAA el año:"""
+mm el mes y AAAA el año:"""
 
 import re
 from datetime import datetime

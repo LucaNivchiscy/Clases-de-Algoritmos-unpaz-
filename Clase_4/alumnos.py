@@ -140,7 +140,7 @@ class Aplicacion:
 
     def ejecutar(self):
         """["1. Crear nuevo alumno", "2. Ver alumnos", "3. Buscar alumno por Codigo de Alumno", "4. Modificar Alumnos",
-         "5. Eliminar alumno", "6. Salir"]"""
+        "5. Eliminar alumno", "6. Salir"]"""
         while True:
             menu = Menu( ["1. Crear nuevo alumno","2. Ver alumnos","3. Buscar alumno por Codigo de Alumno","4. Modificar Alumnos","5. Eliminar alumno","6. Salir"])
             menu.mostrar_menu()
